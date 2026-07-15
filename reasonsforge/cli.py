@@ -2630,8 +2630,9 @@ def main():
     sub = parser.add_subparsers(dest="command")
 
     # Register forge subcommands
-    from .forge.cli import register_forge_commands
+    from .forge.cli import register_forge_commands, register_forge_type_commands
     _forge_commands = register_forge_commands(sub)
+    _forge_type_commands = register_forge_type_commands(sub)
 
     # init
     p = sub.add_parser("init", help="Initialize a new RMS database")
@@ -3418,6 +3419,7 @@ def main():
         "contradictions": cmd_contradictions,
         "namespaces": cmd_namespaces,
         "forge": lambda args: _dispatch_forge(args, _forge_commands),
+        **_forge_type_commands,
     }
     commands[args.command](args)
 
