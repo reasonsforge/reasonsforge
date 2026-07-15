@@ -1,7 +1,32 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "reasonsforge"
-version = "0.1.0"
+version = "0.50.0"
+description = "Reasons Forge — automatic belief retraction and dependency-directed backtracking"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov", "pyyaml"]
+pg = ["psycopg[binary]>=3.1"]
+test-pg = ["psycopg[binary]>=3.1", "pytest", "pytest-cov"]
+cluster = ["sentence-transformers>=2.2", "scikit-learn>=1.2"]
+mcp = ["mcp>=1.0"]
+api = ["langchain-anthropic>=0.3"]
+vertex = ["langchain-google-vertexai>=2.0"]
+langfuse = ["langfuse>=2.0"]
+llm = ["langchain-anthropic>=0.3", "langchain-google-vertexai>=2.0", "langfuse>=2.0"]
+
+[project.scripts]
+reasonsforge = "reasonsforge.cli:main"
+reasonsforge-mcp = "reasonsforge.mcp_server:main"
+
+[tool.setuptools]
+packages = ["reasonsforge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
