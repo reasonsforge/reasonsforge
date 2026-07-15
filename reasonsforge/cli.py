@@ -2629,6 +2629,10 @@ def main():
                         help="Project ID for PostgreSQL (or set REASONSFORGE_PROJECT_ID)")
     sub = parser.add_subparsers(dest="command")
 
+    # Register forge subcommands
+    from .forge.cli import register_forge_commands
+    _forge_commands = register_forge_commands(sub)
+
     # init
     p = sub.add_parser("init", help="Initialize a new RMS database")
     p.add_argument("--force", action="store_true", help="Overwrite existing database")
@@ -3413,5 +3417,15 @@ def main():
         "research": cmd_repair,
         "contradictions": cmd_contradictions,
         "namespaces": cmd_namespaces,
+        "forge": lambda args: _dispatch_forge(args, _forge_commands),
     }
     commands[args.command](args)
+
+
+def _dispatch_forge(args, forge_commands):
+    if not args.forge_command:
+        print("Usage: reasonsforge forge <command>", file=sys.stderr)
+        print("Commands: " + ", ".join(sorted(forge_commands.keys())),
+              file=sys.stderr)
+        sys.exit(1)
+    forge_commands[args.forge_command](args)

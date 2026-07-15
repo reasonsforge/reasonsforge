@@ -20,13 +20,15 @@ api = ["langchain-anthropic>=0.3"]
 vertex = ["langchain-google-vertexai>=2.0"]
 langfuse = ["langfuse>=2.0"]
 llm = ["langchain-anthropic>=0.3", "langchain-google-vertexai>=2.0", "langfuse>=2.0"]
+forge = ["pypdf>=4.0"]
+forge-embeddings = ["fastembed>=0.7.4", "numpy"]
 
 [project.scripts]
 reasonsforge = "reasonsforge.cli:main"
 reasonsforge-mcp = "reasonsforge.mcp_server:main"
 
 [tool.setuptools]
-packages = ["reasonsforge"]
+packages = ["reasonsforge", "reasonsforge.forge"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
